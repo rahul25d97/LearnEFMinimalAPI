@@ -1,0 +1,40 @@
+﻿version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 8.0 # Specify your desired .NET Core version
+    commands:
+      - echo "Installing dependencies..."
+      # You might need to install specific tools or SDKs if not included in the base image
+      # For example, if using global tools:
+      # - dotnet tool install --global <tool-name> --version <version>
+
+  pre_build:
+    commands:
+      - echo "Restoring NuGet packages..."
+      - dotnet restore
+
+  build:
+    commands:
+      - echo "Building the application..."
+      - dotnet build --configuration Release
+
+  post_build:
+    commands:
+      - echo "Running tests..."
+      - dotnet test --configuration Release --no-build --logger trx --results-directory TestResults
+      - echo "Publishing the application..."
+      - dotnet publish --configuration Release --output ./publish
+
+artifacts:
+  files:
+    - '**/*' # Include all files in the 'publish' directory
+  base-directory: './publish' # Specify the base directory for the artifacts
+  discard-paths: yes # Discard the 'publish' directory from the artifact structure
+
+reports:
+  DotnetTestReports:
+    files:
+      - 'TestResults/**/*.trx' # Capture test results for reporting
+    file-format: 'TRX'

@@ -1,0 +1,12 @@
+.vs
+MinimalAPI/bin
+MinimalAPI/obj
+
+Application/MinimalAPI.Interface/bin
+Application/MinimalAPI.Interface/obj
+
+Domain/MinimalAPI.Models/bin
+Domain/MinimalAPI.Models/obj
+
+Infrastructure/MinimalAPI.Repository/bin
+Infrastructure/MinimalAPI.Repository/obj
